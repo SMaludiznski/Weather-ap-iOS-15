@@ -11,7 +11,7 @@ import SwiftUI
 struct WeatherAppiOS15App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
