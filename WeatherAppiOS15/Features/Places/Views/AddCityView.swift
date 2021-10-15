@@ -10,18 +10,29 @@ import SwiftUI
 struct AddCityView: View {
     
     @ObservedObject private var vm = PlacesViewModel()
+    @FocusState private var cityNameIsFocused: Bool
     
     var body: some View {
         VStack {
             HStack {
                 TextField("Add new city", text: $vm.cityName)
                     .font(.title2)
+                    .focused($cityNameIsFocused)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        if !vm.cityName.isEmpty {
+                            vm.addCity(cityName: vm.cityName)
+                            cityNameIsFocused = false
+                            vm.cityName = ""
+                        }
+                    }
                 Image(systemName: "plus.circle")
                     .font(.largeTitle)
                     .foregroundColor(Color.theme.accent)
                     .onTapGesture {
                         if !vm.cityName.isEmpty {
                             vm.addCity(cityName: vm.cityName)
+                            cityNameIsFocused = false
                             vm.cityName = ""
                         }
                     }
